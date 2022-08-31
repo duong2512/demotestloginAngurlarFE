@@ -24,8 +24,8 @@ export class RegisterComponent implements OnInit {
       sdt : new FormControl ("",Validators.required)
   })
 
-    checkMail(){
-     this.registerService.findByEmail(this.registerForm.value.email).subscribe( (data)=>{
+    async checkMail(){
+    await this.registerService.findByEmail(this.registerForm.value.email).subscribe( (data)=>{
      console.log("D ", data)
        console.log("trong")
       if (data==null){
@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
     async register(){
     // xử lý đồng bộ
     // k đồng bộ là việc chạy k tungần tự
-     this.registerService.findByUser(this.registerForm.value.userName).subscribe((data)=>{
+     await this.registerService.findByUser(this.registerForm.value.userName).subscribe((data)=>{
       if(data==null) {
         this.checkMail()
         if (this.checkDuplicateMail){
