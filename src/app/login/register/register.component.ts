@@ -18,28 +18,29 @@
 //   }
 //
 //   registerForm= new FormGroup({
-//       userName : new FormControl("",Validators.required),
-//       passWord : new FormControl("",Validators.required),
-//       email : new FormControl ("",Validators.required),
-//       sdt : new FormControl ("",Validators.required)
+//       userName : new FormControl("1",Validators.required),
+//       passWord : new FormControl("1",Validators.required),
+//       email : new FormControl ("tungduong25122002@gmail.com",Validators.required),
+//       sdt : new FormControl ("1",Validators.required)
 //   })
 //
-//     async checkMail(){
-//     await this.registerService.findByEmail(this.registerForm.value.email).subscribe( (data)=>{
-//      console.log("D ", data)
-//        console.log("trong")
-//       if (data==null){
-//         this.checkDuplicateMail = false;
-//         console.log("mail ok")
-//         return true;
-//       } else {
-//         this.checkDuplicateMail = true;
-//         console.log("trung mail3434")
-//         return false;
-//       }
-//     });
-//     console.log("ngoai");
-//   }
+//   //   checkMail(){
+//   //    this.registerService.findByEmail(this.registerForm.value.email).subscribe( (data)=>{
+//   //    console.log("D ", data)
+//   //
+//   //     if (data==null){
+//   //       console.log("trong")
+//   //       this.checkDuplicateMail = false;
+//   //       console.log("mail ok")
+//   //       return true;
+//   //     } else {
+//   //       this.checkDuplicateMail = true;
+//   //       console.log("trung mail3434")
+//   //       return false;
+//   //     }
+//   //   });
+//   //   console.log("ngoai");
+//   // }
 //
 //
 //     async register(){
@@ -47,7 +48,7 @@
 //     // k đồng bộ là việc chạy k tungần tự
 //      await this.registerService.findByUser(this.registerForm.value.userName).subscribe((data)=>{
 //       if(data==null) {
-//         this.checkMail()
+//
 //         if (this.checkDuplicateMail){
 //           console.log("ok")
 //           this.registerService.register(this.registerForm.value).subscribe(() => {
@@ -105,10 +106,10 @@ export class RegisterComponent implements OnInit {
   }
 
   registerForm= new FormGroup({
-    userName : new FormControl("asds",Validators.required),
-    passWord : new FormControl("123",Validators.required),
-    email : new FormControl ("hau.hc1203@gmail.com",Validators.required),
-    sdt : new FormControl ("123",Validators.required)
+    userName : new FormControl("",Validators.required),
+    passWord : new FormControl("",Validators.required),
+    email : new FormControl ("",Validators.required),
+    sdt : new FormControl ("",Validators.required)
   })
 
   checkMail(){
@@ -116,12 +117,19 @@ export class RegisterComponent implements OnInit {
     this.registerService.findByEmail(this.registerForm.value.email).subscribe( (data)=>{
       if (data!=null){
         this.checkDuplicateMail=true;
+        console.log("trùng mail")
+        // @ts-ignore
+        document.getElementById("checkMail").style.display="flex";
       }
       else {
         this.checkDuplicateMail=false;
+        // @ts-ignore
+        document.getElementById("checkMail").style.display="none";
         if (!this.checkDuplicateUsername){
-
-          alert("Đăng ký tài khoản thành công")
+          this.registerService.register(this.registerForm.value).subscribe(() => {
+          console.log("đăng kí thành công");
+          this.router.navigate(["/login"])
+          })
         }
       }
 
@@ -133,9 +141,14 @@ export class RegisterComponent implements OnInit {
     this.registerService.findByUser(this.registerForm.value.userName).subscribe(   (data:any)=>{
       if(data!=null) {
         this.checkDuplicateUsername=true;
+        console.log("trùng username")
+        // @ts-ignore
+        document.getElementById("checkUserName").style.display = "flex";
       }
       else {
         this.checkDuplicateUsername=false;
+        // @ts-ignore
+        document.getElementById("checkUserName").style.display = "none";
       }
       this.checkMail();
 
